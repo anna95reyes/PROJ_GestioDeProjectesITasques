@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DB_MySQL;
+using DB_MySQL.db;
+using NBA_BD.db;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +28,12 @@ namespace GestioDeProjectesITasques
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ComponentDB componentDB = new ComponentDB();
+            txt.Text = componentDB.GetLlistaProjectes()[0].ToString();
         }
     }
 }

@@ -122,6 +122,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MySQLProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,23 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GestioProjectes_DB\DB_MySQL.csproj">
+      <Project>{8c76ed52-1e70-479a-8507-7a6eefe19be1}</Project>
+      <Name>DB_MySQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestorProjectes\GestorProjectes.csproj">
+      <Project>{8a312982-fabb-48c8-9498-1eff992697d1}</Project>
+      <Name>GestorProjectes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelGestioProjectes\ModelGestioProjectes.csproj">
+      <Project>{03f2d764-8a06-481d-ae58-c2ef33217dc8}</Project>
+      <Name>ModelGestioProjectes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\icons\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
