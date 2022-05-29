@@ -122,6 +122,15 @@ namespace ModelGestioProjectes
                 dataNaixement = value;
             }
         }
+
+        public String DataNaixementFormatada
+        {
+            get
+            {
+                return DataNaixement.ToString("dd/MM/yyyy");
+            }
+        }
+
         public string Login {
             get
             {

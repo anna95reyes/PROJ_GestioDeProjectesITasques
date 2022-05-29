@@ -1,0 +1,219 @@
+﻿<Page
+    x:Class="GestioDeProjectesITasques.View.GestioProjectesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GestioDeProjectesITasques.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    xmlns:wctprimitives="using:Microsoft.Toolkit.Uwp.UI.Controls.Primitives"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Grid Projectes -->
+        <Grid Grid.Row="0" Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Projectes" FontSize="18" FontWeight="Bold" Margin="10"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <controls:DataGrid x:Name="dgrProjectes" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"
+                         AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True"
+                         GridLinesVisibility="None" AlternatingRowBackground="#FFF9F9F9" Background="White" SelectionChanged="dgrProjectes_SelectionChanged">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Id" Binding="{Binding Id}" 
+                                                     Width="SizeToHeader" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+                    
+                    <controls:DataGridTextColumn Header="Nom" Binding="{Binding Nom}" 
+                                                     Width="SizeToCells" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="Descripcio" Binding="{Binding Descripcio}" 
+                                                     Width="250" FontSize="12">
+                        <controls:DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+                        </controls:DataGridTextColumn.ElementStyle>
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="Cap projecte" Binding="{Binding NomCapProjecte}" 
+                                                     Width="SizeToCells" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+            
+            <Button x:Name="BtnNouProjecte" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-add-50.png" Height="30" />
+                    <TextBlock Text="Nou" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="BtnEsborrarProjecte" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-remove-50.png" Height="30" />
+                    <TextBlock Text="Esborrar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="BtnEditarProjecte" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-edit-50.png" Height="30" />
+                    <TextBlock Text="Editar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        
+        <!-- Grid Usuaris -->
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Usuaris Assignats" FontSize="18" FontWeight="Bold" Margin="10"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <controls:DataGrid x:Name="dgrUsuaris" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10"
+                         AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True"
+                         GridLinesVisibility="None" AlternatingRowBackground="#FFF9F9F9" Background="White">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Id" Binding="{Binding Id}" 
+                                                     Width="SizeToHeader" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="Nom" Binding="{Binding Nom}" 
+                                                     Width="SizeToCells" MinWidth="100" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="1r Cognom" Binding="{Binding Cognom1}" 
+                                                     Width="SizeToCells" MinWidth="120" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="2n Cognom" Binding="{Binding Cognom2}" 
+                                                     Width="SizeToCells" MinWidth="120" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="Data de naixement" Binding="{Binding DataNaixementFormatada}" 
+                                                     Width="SizeToCells" MinWidth="150" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="Login" Binding="{Binding Login}" 
+                                                     Width="SizeToCells" MinWidth="100" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+
+            <Button x:Name="BtnAssignarUsuari" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-add-administrator-50.png" Height="30" />
+                    <TextBlock Text="Assignar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="BtnDessasignarUsuari" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-denied-50.png" Height="30" />
+                    <TextBlock Text="Desassignar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+    </Grid>
+</Page>

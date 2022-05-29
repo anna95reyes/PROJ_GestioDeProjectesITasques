@@ -36,22 +36,27 @@ namespace DB_MySQL
 
         public ObservableCollection<Tasca> GetLlistaTasques(int idProjecte)
         {
-            throw new NotImplementedException();
+            return TascaDB.GetLlistaTasques(idProjecte);
         }
 
         public Tasca GetTasca(int idTasca)
         {
-            throw new NotImplementedException();
+            return TascaDB.GetTasca(idTasca);
         }
 
         public ObservableCollection<Entrada> GetLlistaEntrades(int idTasca)
         {
-            throw new NotImplementedException();
+            return EntradaDB.GetLlistaEntrades(idTasca);
         }
 
         public Entrada GetEntrada(int idTasca, int idNumeracio)
         {
-            throw new NotImplementedException();
+            return EntradaDB.GetEntrada(idTasca, idNumeracio);
+        }
+
+        public Estat GetEstat(int idEstat)
+        {
+            return EstatDB.GetEstat(idEstat);
         }
 
         public void addProjecte(Projecte projecte)

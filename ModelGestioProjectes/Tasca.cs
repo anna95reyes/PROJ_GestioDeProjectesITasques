@@ -11,7 +11,7 @@ namespace ModelGestioProjectes
         private DateTime dataCreacio;
         private String nom;
         private String descripcio;
-        private DateTime dataLimit;
+        private DateTime? dataLimit;
 
         private Usuari propietari;
         private Usuari responsable;
@@ -27,7 +27,7 @@ namespace ModelGestioProjectes
             this.estat = estat;
         }
 
-        public Tasca(int id, DateTime dataCreacio, string nom, string descripcio, DateTime dataLimit, Usuari propietari, Usuari responsable, Estat estat)
+        public Tasca(int id, DateTime dataCreacio, string nom, string descripcio, DateTime? dataLimit, Usuari propietari, Usuari responsable, Estat estat)
         {
             Id = id;
             DataCreacio = dataCreacio;
@@ -39,7 +39,7 @@ namespace ModelGestioProjectes
             this.estat = estat;
         }
 
-        public Tasca(int id, DateTime dataCreacio, string nom, string descripcio, DateTime dataLimit, Usuari propietari, Usuari responsable, Estat estat, ObservableCollection<Entrada> entrades)
+        public Tasca(int id, DateTime dataCreacio, string nom, string descripcio, DateTime? dataLimit, Usuari propietari, Usuari responsable, Estat estat, ObservableCollection<Entrada> entrades)
         {
             Id = id;
             DataCreacio = dataCreacio;
@@ -108,7 +108,7 @@ namespace ModelGestioProjectes
                 descripcio = value;
             }
         }
-        public DateTime DataLimit {
+        public DateTime? DataLimit {
             get
             {
                 return dataLimit;

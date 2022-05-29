@@ -1,5 +1,6 @@
 ﻿using DB_MySQL;
 using DB_MySQL.db;
+using GestioDeProjectesITasques.View;
 using NBA_BD.db;
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,20 @@ namespace GestioDeProjectesITasques
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ComponentDB componentDB = new ComponentDB();
-            txt.Text = componentDB.GetLlistaProjectes()[0].ToString();
+            frmPrincipal.Navigate(typeof(GestioProjectesPage));
+            nviGestioProjectes.IsSelected = true;
+        }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (nviGestioProjectes.Content.Equals(args.InvokedItem))
+            {
+                frmPrincipal.Navigate(typeof(GestioProjectesPage));
+            }
+            else if (nviInformes.Content.Equals(args.InvokedItem))
+            {
+                frmPrincipal.Navigate(typeof(InformesPage));
+            }
         }
     }
 }

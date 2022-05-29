@@ -17,6 +17,7 @@ namespace GestorProjectes
         Tasca GetTasca(int idTasca);
         ObservableCollection<Entrada> GetLlistaEntrades(int idTasca);
         Entrada GetEntrada(int idTasca, int idNumeracio);
+        Estat GetEstat(int idEstat);
         void addProjecte(Projecte projecte);
         void updateProjecte(Projecte projecte);
         void deleteProjecte(int idProjecte);

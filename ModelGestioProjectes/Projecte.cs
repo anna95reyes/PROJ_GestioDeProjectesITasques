@@ -106,6 +106,13 @@ namespace ModelGestioProjectes
             }
         }
 
+        public String NomCapProjecte
+        {
+            get
+            {
+                return CapProjecte.Cognom1 + (CapProjecte.Cognom2 != null ? " " + CapProjecte.Cognom2 : "") + ", " + CapProjecte.Nom;
+            }
+        }
         public ObservableCollection<Tasca> getTasques()
         {
             return tasques;
