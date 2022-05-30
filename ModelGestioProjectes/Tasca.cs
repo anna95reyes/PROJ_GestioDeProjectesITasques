@@ -80,6 +80,13 @@ namespace ModelGestioProjectes
                 dataCreacio = value;
             }
         }
+        public String DataCreacioFormatada
+        {
+            get
+            {
+                return DataCreacio.ToString("dd/MM/yyyy");
+            }
+        }
         public string Nom {
             get
             {
@@ -123,6 +130,13 @@ namespace ModelGestioProjectes
                 dataLimit = value;
             }
         }
+        public String DataLimitFormatada
+        {
+            get
+            {
+                return DataLimit != null? ((DateTime)DataLimit).ToString("dd/MM/yyyy") : "";
+            }
+        }
         public Usuari Propietari {
             get
             {
@@ -137,6 +151,13 @@ namespace ModelGestioProjectes
                 propietari = value;
             }
         }
+        public String NomPropietari
+        {
+            get
+            {
+                return Propietari.Cognom1 + (Propietari.Cognom2 != null ? " " + Propietari.Cognom2 : "") + ", " + Propietari.Nom;
+            }
+        }
         public Usuari Responsable {
             get
             {
@@ -145,6 +166,13 @@ namespace ModelGestioProjectes
             set
             {
                 responsable = value;
+            }
+        }
+        public String NomResponsable
+        {
+            get
+            {
+                return Responsable != null? Responsable.Cognom1 + (Responsable.Cognom2 != null ? " " + Responsable.Cognom2 : "") + ", " + Responsable.Nom : "";
             }
         }
 
@@ -157,6 +185,13 @@ namespace ModelGestioProjectes
             get
             {
                 return estat;
+            }
+        }
+        public String EstatFormatat
+        {
+            get
+            {
+                return Estat != null ? Estat.Nom : "";
             }
         }
 

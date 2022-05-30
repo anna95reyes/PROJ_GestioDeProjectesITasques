@@ -58,6 +58,15 @@ namespace ModelGestioProjectes
                 data = value;
             }
         }
+
+        public String DataFormatada
+        {
+            get
+            {
+                return Data.ToString("dd/MM/yyyy");
+            }
+        }
+
         public String _Entrada {
             get
             {
@@ -86,6 +95,13 @@ namespace ModelGestioProjectes
                 escriptor = value;
             } 
         }
+        public String NomEscriptor
+        {
+            get
+            {
+                return Escriptor.Cognom1 + (Escriptor.Cognom2 != null ? " " + Escriptor.Cognom2 : "") + ", " + Escriptor.Nom;
+            }
+        }
         public Usuari NovaAssignacio {
             get
             {
@@ -100,6 +116,13 @@ namespace ModelGestioProjectes
                 novaAssignacio = value;
             }
         }
+        public String NomNovaAssignacio
+        {
+            get
+            {
+                return NovaAssignacio != null? NovaAssignacio.Cognom1 + (NovaAssignacio.Cognom2 != null ? " " + NovaAssignacio.Cognom2 : "") + ", " + NovaAssignacio.Nom : "";
+            }
+        }
         public Estat NouEstat {
             get
             {
@@ -110,7 +133,13 @@ namespace ModelGestioProjectes
                 nouEstat = value;
             }
         }
-
+        public String NouEstatFormatat
+        {
+            get
+            {
+                return NouEstat != null ? NouEstat.Nom : "";
+            }
+        }
         public override bool Equals(object obj)
         {
             return obj is Entrada entrada &&
