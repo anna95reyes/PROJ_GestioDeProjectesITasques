@@ -97,6 +97,131 @@ namespace GestioProjectes_DB
             return projecte;
         }
 
+        public static void addProjecte(Projecte proj)
+        {
+            using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
+            {
+                using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
+                {
+                    connection.Open();
+                    DbTransaction transaccio = connection.BeginTransaction(); //Creacio d'una transaccio
+
+                    using (DbCommand consulta = connection.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // marques la consulta dins de la transacció
+
+                        consulta.CommandText = "select max(proj_id)+1 from projecte";
+                        int nextProjecteId = (int)(Int64)consulta.ExecuteScalar();
+
+                        DBUtil.crearParametre(consulta, "@proj_id", nextProjecteId, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@proj_nom", proj.Nom, DbType.String);
+                        DBUtil.crearParametre(consulta, "@proj_descripcio", proj.Descripcio, DbType.String);
+                        DBUtil.crearParametre(consulta, "@usu_cap_projecte", proj.CapProjecte.Id, DbType.Int32);
+
+                        consulta.CommandText = $@"insert into projecte (proj_id, proj_nom, proj_descripcio, usu_cap_projecte)
+                                                  values (@proj_id, @proj_nom, @proj_descripcio, @usu_cap_projecte)";
+
+                        int numeroDeFiles = consulta.ExecuteNonQuery(); //per fer un update o un delete
+                        if (numeroDeFiles != 1)
+                        {
+                            transaccio.Rollback();
+                        }
+                        else
+                        {
+                            proj.Id = (int)nextProjecteId;
+                            transaccio.Commit();
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        public static void updateProjecte(Projecte proj)
+        {
+            //TODO: fer l'update
+            using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
+            {
+                using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
+                {
+                    connection.Open();
+                    DbTransaction transaccio = connection.BeginTransaction(); //Creacio d'una transaccio
+
+                    using (DbCommand consulta = connection.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // marques la consulta dins de la transacció
+
+
+                        DBUtil.crearParametre(consulta, "@proj_id", proj.Id, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@proj_nom", proj.Nom, DbType.String);
+                        DBUtil.crearParametre(consulta, "@proj_descripcio", proj.Descripcio, DbType.String);
+                        DBUtil.crearParametre(consulta, "@usu_cap_projecte", proj.CapProjecte.Id, DbType.Int32);
+
+                        consulta.CommandText = $@"update projecte set proj_nom = @proj_nom,
+					                                              proj_descripcio = @proj_descripcio,
+                                                                  usu_cap_projecte = @usu_cap_projecte
+		                                          where proj_id = @proj_id";
+
+                        int numeroDeFiles = consulta.ExecuteNonQuery(); //per fer un update o un delete
+                        if (numeroDeFiles != 1)
+                        {
+                            //shit happens
+                            transaccio.Rollback();
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        public static bool deleteProjecte(int projId)
+        {
+            using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
+            {
+                bool haAnatBe = true;
+
+                using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
+                {
+                    connection.Open();
+                    DbTransaction transaccio = connection.BeginTransaction(); //Creacio d'una transaccio
+
+                    using (DbCommand consulta = connection.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // marques la consulta dins de la transacció
+
+
+                        DBUtil.crearParametre(consulta, "@proj_id", projId, DbType.Int32);
+                        consulta.CommandText = "select count(1) from projecte where proj_id = @proj_id";
+                        long numProjectes = (long)consulta.ExecuteScalar();
+
+                        if (numProjectes != 1) return false;
+
+                        consulta.CommandText = "delete from projecte where proj_id = @proj_id";
+
+                        int numDeleted = consulta.ExecuteNonQuery();
+
+                        if (numDeleted != 1)
+                        {
+                            transaccio.Rollback();
+                            haAnatBe = false;
+                        }
+                        transaccio.Commit();
+                        return haAnatBe;
+
+                    }
+
+                }
+
+            }
+        }
+
+
         private static string readerStringOrNull(DbDataReader reader, int ordinal, String valorPerDefecte)
         {
             string value = valorPerDefecte;

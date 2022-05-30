@@ -346,7 +346,7 @@
                     <TextBlock Text="Esborrar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="btnEditarTasca" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="5" Click="Click">
+            <Button x:Name="btnEditarTasca" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Margin="5" Click="btnEditarTasca_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Assets/icons/icons8-edit-50.png" Height="30" />
                     <TextBlock Text="Editar" VerticalAlignment="Center"  Margin="5 0 0 0"/>

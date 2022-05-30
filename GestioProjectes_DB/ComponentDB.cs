@@ -19,6 +19,12 @@ namespace DB_MySQL
             return ProjecteDB.GetProjecte(idProjecte);
         }
 
+
+        public ObservableCollection<Usuari> GetLlistaUsuaris()
+        {
+            return UsuariDB.GetLlistaUsuaris();
+        }
+
         public ObservableCollection<Usuari> GetLlistaUsuarisAssignats(int idProjecte)
         {
             return UsuariDB.GetLlistaUsuarisAssignats(idProjecte);
@@ -61,57 +67,57 @@ namespace DB_MySQL
 
         public void addProjecte(Projecte projecte)
         {
-            throw new NotImplementedException();
+            ProjecteDB.addProjecte(projecte);
         }
 
         public void updateProjecte(Projecte projecte)
         {
-            throw new NotImplementedException();
+            ProjecteDB.updateProjecte(projecte);
         }
 
         public void deleteProjecte(int idProjecte)
         {
-            throw new NotImplementedException();
+            ProjecteDB.deleteProjecte(idProjecte);
         }
 
-        public void assignarUsuari(int idUsuari)
+        public void assignarUsuari(int idProjecte, int idUsuari, int idRol)
         {
-            throw new NotImplementedException();
+            ProjecteUsuariRolDB.assignarUsuari(idProjecte, idUsuari, idRol);
         }
 
-        public void desassignarUsuari(int idUsuari)
+        public void desassignarUsuari(int idProjecte, int idUsuari)
         {
-            throw new NotImplementedException();
+            ProjecteUsuariRolDB.desassignarUsuari(idProjecte, idUsuari);
         }
 
-        public void addTasca(Tasca tasca)
+        public void addTasca(Tasca tasca, int idProjecte)
         {
-            throw new NotImplementedException();
+            TascaDB.addTasca(tasca, idProjecte);
         }
 
         public void updateTasca(Tasca tasca)
         {
-            throw new NotImplementedException();
+            TascaDB.updateTasca(tasca);
         }
 
         public void deleteTasca(int idTasca)
         {
-            throw new NotImplementedException();
+            TascaDB.deleteTasca(idTasca);
         }
 
-        public void addTEntrada(int idTasca, Entrada entrada)
+        public void addEntrada(int idTasca, Entrada entrada)
         {
-            throw new NotImplementedException();
+            EntradaDB.addEntrada(idTasca, entrada);
         }
 
         public void updateEntrada(int idTasca, Entrada entrada)
         {
-            throw new NotImplementedException();
+            EntradaDB.updateEntrada(idTasca, entrada);
         }
 
-        public void deleteEntrada(int idEntrada)
+        public void deleteEntrada(int idTasca, int numeroEntrada)
         {
-            throw new NotImplementedException();
+            EntradaDB.deleteEntrada(idTasca, numeroEntrada);
         }
 
     }

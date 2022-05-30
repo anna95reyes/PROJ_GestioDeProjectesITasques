@@ -163,9 +163,9 @@ namespace ModelGestioProjectes
             return !(dada == null || dada.Length <= 0);
         }
 
-        public static Boolean comprobarDataNaixement(DateTime data)
+        public static Boolean comprobarDataNaixement(DateTime dataNaixement)
         {
-            return data > DateTime.Now;
+            return dataNaixement > DateTime.Now;
         }
 
         public static Boolean comprobarDadesOpcionals(String dada)
@@ -184,9 +184,18 @@ namespace ModelGestioProjectes
             return 2108858624 + Id.GetHashCode();
         }
 
+        public string NomComplet
+        {
+            get
+            {
+                return Cognom1 + (Cognom2 != null ? " " + Cognom2 : "") + ", " + Nom;
+            }
+            
+        }
+
         public override string ToString()
         {
-            return "Usuari{" + "id=" + id + ", nom=" + nom + ", cognom1=" + cognom1 + ", cognom2=" + cognom2 + ", dataNaixement=" + dataNaixement + ", login=" + login + ", passwordHash=" + passwordHash + ", projectes=" + projectesRol + ", tasques=" + tasquesAssignades + '}';
+            return NomComplet;
         }
 
     }

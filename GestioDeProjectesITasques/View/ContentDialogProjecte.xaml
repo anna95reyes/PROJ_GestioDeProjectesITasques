@@ -1,0 +1,53 @@
+﻿<ContentDialog
+    x:Class="GestioDeProjectesITasques.View.ContentDialogProjecte"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GestioDeProjectesITasques.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Edicio projecte"
+    CornerRadius="10"
+    Loaded="ContentDialog_Loaded"
+    x:Name="dialogProjecte">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox x:Name="txtNom" Grid.Row="0" Grid.Column="1" Margin="5" TextChanged="txtNom_TextChanged"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Descripcio:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox x:Name="txtDescripcio" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="5"
+                 MinHeight="150" MinWidth="250" TextChanged="txtDescripcio_TextChanged"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Cap:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+        <ComboBox x:Name="cbxCapProjecte" Grid.Row="2" Grid.Column="1" Margin="5" MinWidth="150"
+                  SelectionChanged="cbxCapProjecte_SelectionChanged"/>
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 30 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnGuardar" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnGuardar_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-save-50.png" Height="30"/>
+                    <TextBlock Text="Guardar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnCancelar" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnCancelar_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-cancel-50.png" Height="30" />
+                    <TextBlock Text="Cancelar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</ContentDialog>

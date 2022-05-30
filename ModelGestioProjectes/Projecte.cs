@@ -56,13 +56,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value <= 0)
+                if (!validaId(value))
                 {
                     throw new Exception("La id es positiva");
                 }
                 id = value;
             }
         }
+
+        public static bool validaId(int value)
+        {
+            return !(value <= 0);
+        }
+
         public string Nom {
             get
             {
@@ -70,13 +76,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value.Length <= 0)
+                if (!validaNom(value))
                 {
                     throw new Exception("El nom es obligatori i no buit");
                 }
                 nom = value;
             }
         }
+
+        public static bool validaNom(string value)
+        {
+            return !(value.Length <= 0);
+        }
+
         public string Descripcio {
             get
             {
@@ -84,13 +96,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value != null && value.Length <= 0)
+                if (!validaDescripcio(value))
                 {
                     throw new Exception("La descripcio es nula o amb contingut");
                 }
                 descripcio = value;
             }
         }
+
+        public static bool validaDescripcio(string value)
+        {
+            return !(value != null && value.Length <= 0);
+        }
+
         public Usuari CapProjecte {
             get
             {
@@ -98,12 +116,17 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value == null)
+                if (!validaCapProjecte(value))
                 {
                     throw new Exception("El cap del projecte es obligatori");
                 }
                 capProjecte = value;
             }
+        }
+
+        public static bool validaCapProjecte(Usuari value)
+        {
+            return value != null;
         }
 
         public String NomCapProjecte

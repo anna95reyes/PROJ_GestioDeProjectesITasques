@@ -1,7 +1,9 @@
 ﻿using DB_MySQL;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using ModelGestioProjectes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,19 +26,6 @@ namespace GestioDeProjectesITasques.View
     /// </summary>
     public sealed partial class GestioProjectesPage : Page
     {
-
-        public enum Estat
-        {
-            VIEW,
-            ALTA_PROJECTE,
-            MODIFICACIO_PROJECTE,
-            ASSIGNACIO_USUARI,
-            ALTA_TASCA,
-            MODIFICACIO_TASCA,
-            ALTA_ENTRADA,
-            MODIFICACIO_ENTRADA
-        }
-
         ComponentDB componentDB = new ComponentDB();
         Estat estat = Estat.VIEW;
 
@@ -145,36 +134,6 @@ namespace GestioDeProjectesITasques.View
                 }
 
             } 
-            else if (estat == Estat.ALTA_PROJECTE)
-            {
-
-            }
-            else if (estat == Estat.MODIFICACIO_PROJECTE)
-            {
-
-            }
-            else if (estat == Estat.ASSIGNACIO_USUARI)
-            {
-
-            }
-            else if (estat == Estat.ALTA_TASCA)
-            {
-
-            }
-            else if (estat == Estat.MODIFICACIO_TASCA)
-            {
-
-            }
-            else if (estat == Estat.ALTA_ENTRADA)
-            {
-
-            }
-            else if (estat == Estat.MODIFICACIO_ENTRADA)
-            {
-
-            }
-
-
         }
 
         private void dgrProjectes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -193,6 +152,8 @@ namespace GestioDeProjectesITasques.View
         {
             if (dgrUsuaris.SelectedItem != null)
             {
+                dgrTasques.SelectedIndex = -1;
+                dgrEntrades.ItemsSource = null;
                 canviEstat(Estat.VIEW);
             }
             
@@ -202,6 +163,7 @@ namespace GestioDeProjectesITasques.View
         {
             if (dgrTasques.SelectedItem != null && dgrProjectes.SelectedItem != null)
             {
+                dgrUsuaris.SelectedIndex = -1;
                 Tasca tasc = (Tasca)dgrTasques.SelectedItem;
                 dgrEntrades.ItemsSource = componentDB.GetLlistaEntrades(tasc.Id);
                 canviEstat(Estat.VIEW);
@@ -216,18 +178,36 @@ namespace GestioDeProjectesITasques.View
             }
         }
 
-        private void btnNouProjecte_Click(object sender, RoutedEventArgs e)
+        private async void btnNouProjecte_Click(object sender, RoutedEventArgs e)
         {
-
+            ContentDialog cpt = new ContentDialogProjecte
+            {
+                ElProjecte = null,
+                ElEstat = Estat.ALTA_PROJECTE
+            };
+            ContentDialogResult result = await cpt.ShowAsync();
+            dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
+            canviEstat(Estat.VIEW);
         }
 
         private void btnEsborrarProjecte_Click(object sender, RoutedEventArgs e)
         {
-
+            Projecte proj = (Projecte)dgrProjectes.SelectedItem;
+            componentDB.deleteProjecte(proj.Id);
+            dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
+            canviEstat(Estat.VIEW);
         }
 
-        private void btnEditarProjecte_Click(object sender, RoutedEventArgs e)
+        private async void btnEditarProjecte_Click(object sender, RoutedEventArgs e)
         {
+            ContentDialog cpt = new ContentDialogProjecte
+            {
+                ElProjecte = (Projecte)dgrProjectes.SelectedItem,
+                ElEstat = Estat.MODIFICACIO_PROJECTE
+            };
+            ContentDialogResult result = await cpt.ShowAsync();
+            dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
+            canviEstat(Estat.VIEW);
 
         }
 
@@ -251,6 +231,11 @@ namespace GestioDeProjectesITasques.View
 
         }
 
+        private void btnEditarTasca_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void btnNovaEntrada_Click(object sender, RoutedEventArgs e)
         {
 
@@ -265,5 +250,7 @@ namespace GestioDeProjectesITasques.View
         {
 
         }
+
+        
     }
 }

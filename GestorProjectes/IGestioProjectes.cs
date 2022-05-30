@@ -10,6 +10,7 @@ namespace GestorProjectes
     {
         ObservableCollection<Projecte> GetLlistaProjectes();
         Projecte GetProjecte(int idProjecte);
+        ObservableCollection<Usuari> GetLlistaUsuaris();
         ObservableCollection<Usuari> GetLlistaUsuarisAssignats(int idProjecte);
         ObservableCollection<Usuari> GetLlistaUsuarisNoAssignats(int idProjecte);
         Usuari GetUsuari(int idUsuari);
@@ -21,14 +22,14 @@ namespace GestorProjectes
         void addProjecte(Projecte projecte);
         void updateProjecte(Projecte projecte);
         void deleteProjecte(int idProjecte);
-        void assignarUsuari(int idUsuari);
-        void desassignarUsuari(int idUsuari);
-        void addTasca(Tasca tasca);
+        void assignarUsuari(int idProjecte, int idUsuari, int idRol);
+        void desassignarUsuari(int idProjecte, int idUsuari);
+        void addTasca(Tasca tasca, int idProjecte);
         void updateTasca(Tasca tasca);
         void deleteTasca(int idTasca);
-        void addTEntrada(int idTasca, Entrada entrada);
+        void addEntrada(int idTasca, Entrada entrada);
         void updateEntrada(int idTasca, Entrada entrada);
-        void deleteEntrada(int idEntrada);
+        void deleteEntrada(int idTasca, int numeroEntrada);
 
 
     }

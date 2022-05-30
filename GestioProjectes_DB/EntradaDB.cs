@@ -114,6 +114,141 @@ namespace DB_MySQL
             return entrada;
         }
 
+        public static void addEntrada(int idTasca, Entrada entrada)
+        {
+            using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
+            {
+                using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
+                {
+                    connection.Open();
+                    DbTransaction transaccio = connection.BeginTransaction(); //Creacio d'una transaccio
+
+                    using (DbCommand consulta = connection.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // marques la consulta dins de la transacció
+
+                        DBUtil.crearParametre(consulta, "@tasc_id", idTasca, DbType.Int32);
+
+                        consulta.CommandText = "select max(entr_numeracio)+1 from entrada where tasc_id = @idTasca";
+                        int nextNumeracioId = (int)(Int64)consulta.ExecuteScalar();
+
+                        
+                        DBUtil.crearParametre(consulta, "@entr_numeracio", nextNumeracioId, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@entr_data", entrada.Data, DbType.DateTime);
+                        DBUtil.crearParametre(consulta, "@entr_entrada", entrada._Entrada, DbType.String);
+                        DBUtil.crearParametre(consulta, "@usu_escrita_per", entrada.Escriptor.Id, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@usu_nova_assignacio", entrada.NovaAssignacio.Id, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@stat_id", entrada.NouEstat.Id, DbType.Int32);
+
+                        consulta.CommandText = $@"insert into entrada (tasc_id, entr_numeracio, entr_data, entr_entrada, 
+                                                                       usu_escrita_per, usu_nova_assignacio, stat_id)
+                                                  values (@tasc_id, @entr_numeracio, @entr_data, @entr_entrada, @usu_escrita_per, 
+                                                          @usu_nova_assignacio, @stat_id)";
+
+                        int numeroDeFiles = consulta.ExecuteNonQuery(); //per fer un update o un delete
+                        if (numeroDeFiles != 1)
+                        {
+                            transaccio.Rollback();
+                        }
+                        else
+                        {
+                            entrada.Numero = (int)nextNumeracioId;
+                            transaccio.Commit();
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        public static void updateEntrada(int idTasca, Entrada entrada)
+        {
+            //TODO: fer l'update
+            using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
+            {
+                using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
+                {
+                    connection.Open();
+                    DbTransaction transaccio = connection.BeginTransaction(); //Creacio d'una transaccio
+
+                    using (DbCommand consulta = connection.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // marques la consulta dins de la transacció
+
+                        DBUtil.crearParametre(consulta, "@tasc_id", idTasca, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@entr_numeracio", entrada.Numero, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@entr_data", entrada.Data, DbType.DateTime);
+                        DBUtil.crearParametre(consulta, "@entr_entrada", entrada._Entrada, DbType.String);
+                        DBUtil.crearParametre(consulta, "@usu_escrita_per", entrada.Escriptor.Id, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@usu_nova_assignacio", entrada.NovaAssignacio.Id, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@stat_id", entrada.NouEstat.Id, DbType.Int32);
+
+                        consulta.CommandText = $@"update entrada set entr_data = @entr_data,
+                                                                   entr_entrada = @entr_entrada,
+                                                                   usu_escrita_per = @usu_escrita_per,
+                                                                   usu_nova_assignacio = @usu_nova_assignacio,
+                                                                   stat_id = @stat_id
+		                                          where tasc_id = @tasc_id and entr_numeracio = @entr_numeracio";
+
+                        int numeroDeFiles = consulta.ExecuteNonQuery(); //per fer un update o un delete
+                        if (numeroDeFiles != 1)
+                        {
+                            //shit happens
+                            transaccio.Rollback();
+                        }
+                        else
+                        {
+                            transaccio.Commit();
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        public static bool deleteEntrada(int idTasca, int numeroEntrada)
+        {
+            using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
+            {
+                bool haAnatBe = true;
+
+                using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
+                {
+                    connection.Open();
+                    DbTransaction transaccio = connection.BeginTransaction(); //Creacio d'una transaccio
+
+                    using (DbCommand consulta = connection.CreateCommand())
+                    {
+                        consulta.Transaction = transaccio; // marques la consulta dins de la transacció
+
+
+                        DBUtil.crearParametre(consulta, "@tasc_id", idTasca, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@entr_numeracio", numeroEntrada, DbType.Int32);
+                        consulta.CommandText = "select count(1) from entrada where tasc_id = @tasc_id and entr_numeracio = @entrada_numeracio";
+                        long numProjectes = (long)consulta.ExecuteScalar();
+
+                        if (numProjectes != 1) return false;
+
+                        consulta.CommandText = "delete from entrada where tasc_id = @tasc_id and entr_numeracio = @entrada_numeracio";
+
+                        int numDeleted = consulta.ExecuteNonQuery();
+
+                        if (numDeleted != 1)
+                        {
+                            transaccio.Rollback();
+                            haAnatBe = false;
+                        }
+                        transaccio.Commit();
+                        return haAnatBe;
+
+                    }
+
+                }
+
+            }
+        }
 
         private static int? readerIntegerOrNull(DbDataReader reader, int ordinal, int? valorPerDefecte)
         {
