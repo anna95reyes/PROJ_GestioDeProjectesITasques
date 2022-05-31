@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestioDeProjectesITasques
 {
-    public enum Estat
+    public enum EnumEstats
     {
         VIEW,
         ALTA_PROJECTE,

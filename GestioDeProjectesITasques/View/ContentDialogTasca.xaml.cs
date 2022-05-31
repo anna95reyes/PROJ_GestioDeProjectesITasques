@@ -28,6 +28,14 @@ namespace GestioDeProjectesITasques.View
 
         ComponentDB componentDB = new ComponentDB();
 
+        private int idProjecte;
+
+        public int IdProjecte
+        {
+            get { return idProjecte; }
+            set { idProjecte = value; }
+        }
+
         private Tasca laTasca;
 
         public Tasca LaTasca
@@ -36,8 +44,8 @@ namespace GestioDeProjectesITasques.View
             set { laTasca = value; }
         }
 
-        private Estat estat;
-        public Estat ElEstat
+        private EnumEstats estat;
+        public EnumEstats ElEstat
         {
             get { return estat; }
             set { estat = value; }
@@ -52,11 +60,11 @@ namespace GestioDeProjectesITasques.View
             cbxResponsable.ItemsSource = componentDB.GetLlistaUsuaris();
             cbxEstat.ItemsSource = componentDB.GetLlistaEstats();
 
-            if (laTasca == null && estat == Estat.ALTA_TASCA)
+            if (laTasca == null && estat == EnumEstats.ALTA_TASCA)
             {
                 netejarFormulari();
             }
-            else if (laTasca != null && estat == Estat.MODIFICACIO_TASCA)
+            else if (laTasca != null && estat == EnumEstats.MODIFICACIO_TASCA)
             {
                 mostrarFormulari();
                 cdpDataCreacio.IsEnabled = false;
@@ -68,7 +76,7 @@ namespace GestioDeProjectesITasques.View
         {
             cdpDataCreacio.Date = laTasca.DataCreacio;
             txtNom.Text = laTasca.Nom;
-            txtDescripcio.Text = laTasca.Descripcio;
+            txtDescripcio.Text = laTasca.Descripcio != null? laTasca.Descripcio : "";
             cdpDataLimit.Date = laTasca.DataLimit;
             cbxPropietari.SelectedItem = laTasca.Propietari;
             cbxResponsable.SelectedItem = laTasca.Responsable;
@@ -86,43 +94,95 @@ namespace GestioDeProjectesITasques.View
             cbxEstat.SelectedItem = null;
         }
 
+        private Boolean validarFormulari()
+        {
+            String descripcio = txtDescripcio.Text != "" ? txtDescripcio.Text : null;
+            return cdpDataCreacio.Date != null && Tasca.validaNom(txtNom.Text) && Tasca.validaDescripcio(descripcio) &&
+                   cbxPropietari.SelectedItem != null && cbxEstat.SelectedItem != null; 
+        }
+
         private void txtNom_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void txtDescripcio_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void cdpDataCreacio_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void cdpDataLimit_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void cbxPropietari_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void cbxResponsable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void cbxEstat_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (validarFormulari())
+            {
+                btnGuardar.IsEnabled = true;
+            }
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
+            if (estat == EnumEstats.ALTA_TASCA)
+            {
+                DateTime? dataLimit = null;
+                if (cdpDataLimit.Date != null) dataLimit = cdpDataLimit.Date.Value.DateTime;
+                String descripcio = txtDescripcio.Text != "" ? txtDescripcio.Text : null;
+
+                Tasca tasc = new Tasca(1, cdpDataCreacio.Date.Value.DateTime, txtNom.Text, descripcio,
+                                       dataLimit, (Usuari)cbxPropietari.SelectedItem,
+                                       (Usuari)cbxResponsable.SelectedItem, (Estat)cbxEstat.SelectedItem);
+
+                componentDB.addTasca(tasc, idProjecte);
+            }
+            else if (estat == EnumEstats.MODIFICACIO_TASCA)
+            {
+                DateTime? dataLimit = null;
+                if (cdpDataLimit.Date != null) dataLimit = cdpDataLimit.Date.Value.DateTime;
+                String descripcio = txtDescripcio.Text != "" ? txtDescripcio.Text : null;
+
+                Tasca tasc = new Tasca(laTasca.Id, laTasca.DataCreacio, txtNom.Text, descripcio,
+                                       dataLimit, laTasca.Propietari,
+                                       (Usuari)cbxResponsable.SelectedItem, (Estat)cbxEstat.SelectedItem);
+
+                componentDB.updateTasca(tasc);
+            }
             dialogTasca.Hide();
         }
 

@@ -38,8 +38,8 @@ namespace GestioDeProjectesITasques.View
             set { idProjecte = value; }
         }
 
-        private Estat estat;
-        public Estat ElEstat
+        private EnumEstats estat;
+        public EnumEstats ElEstat
         {
             get { return estat; }
             set { estat = value; }

@@ -143,13 +143,25 @@ namespace DB_MySQL
                         DBUtil.crearParametre(consulta, "@tasc_data_limit", tasca.DataLimit, DbType.DateTime);
                         DBUtil.crearParametre(consulta, "@proj_id", idProjecte, DbType.Int32);
                         DBUtil.crearParametre(consulta, "@usu_creada_per", tasca.Propietari.Id, DbType.Int32);
-                        DBUtil.crearParametre(consulta, "@usu_assignada_a", tasca.Responsable.Id, DbType.Int32);
                         DBUtil.crearParametre(consulta, "@stat_id", tasca.Estat.Id, DbType.Int32);
 
-                        consulta.CommandText = $@"insert into tasca (tasc_id, tasc_data_creacio, tasc_nom, tasc_descripcio, 
+                        if (tasca.Responsable != null)
+                        {
+                            DBUtil.crearParametre(consulta, "@usu_assignada_a", tasca.Responsable.Id, DbType.Int32);
+
+                            consulta.CommandText = $@"insert into tasca (tasc_id, tasc_data_creacio, tasc_nom, tasc_descripcio, 
                                                                      tasc_data_limit, proj_id, usu_creada_per, usu_assignada_a, stat_id)
                                                   values (@tasc_id, @tasc_data_creacio, @tasc_nom, @tasc_descripcio , @tasc_data_limit, 
                                                           @proj_id, @usu_creada_per, @usu_assignada_a, @stat_id)";
+
+                        } 
+                        else
+                        {
+                            consulta.CommandText = $@"insert into tasca (tasc_id, tasc_data_creacio, tasc_nom, tasc_descripcio, 
+                                                                     tasc_data_limit, proj_id, usu_creada_per, usu_assignada_a, stat_id)
+                                                  values (@tasc_id, @tasc_data_creacio, @tasc_nom, @tasc_descripcio , @tasc_data_limit, 
+                                                          @proj_id, @usu_creada_per, null, @stat_id)";
+                        }
 
                         int numeroDeFiles = consulta.ExecuteNonQuery(); //per fer un update o un delete
                         if (numeroDeFiles != 1)

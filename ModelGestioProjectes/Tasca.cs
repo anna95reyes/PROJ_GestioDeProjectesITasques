@@ -59,13 +59,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value <= 0)
+                if (!validaId(value))
                 {
                     throw new Exception("La id es positiva");
                 }
                 id = value;
             }
         }
+
+        public static bool validaId(int value)
+        {
+            return !(value <= 0);
+        }
+
         public DateTime DataCreacio {
             get
             {
@@ -73,13 +79,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value > DateTime.Now)
+                if (!validaDataCreacio(value))
                 {
                     throw new Exception("La data de creacio ha de ser anterior a la data actual");
                 }
                 dataCreacio = value;
             }
         }
+
+        public static bool validaDataCreacio(DateTime value)
+        {
+            return !(value > DateTime.Now);
+        }
+
         public String DataCreacioFormatada
         {
             get
@@ -94,13 +106,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value == null || value.Length <= 0)
+                if (!validaNom(value))
                 {
                     throw new Exception("El nom es obligatori i no buit");
                 }
                 nom = value;
             }
         }
+
+        public static bool validaNom(string value)
+        {
+            return !(value == null || value.Length <= 0);
+        }
+
         public string Descripcio {
             get
             {
@@ -108,13 +126,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value != null && value.Length <= 0)
+                if (!validaDescripcio(value))
                 {
                     throw new Exception("La descripcio es nula o amb contingut");
                 }
                 descripcio = value;
             }
         }
+
+        public static bool validaDescripcio(string value)
+        {
+            return !(value != null && value.Length <= 0);
+        }
+
         public DateTime? DataLimit {
             get
             {
@@ -123,13 +147,19 @@ namespace ModelGestioProjectes
 
             set
             {
-                if (value != null && value < dataCreacio)
+                if (!validaDataLimit(value))
                 {
                     throw new Exception("La data limit es nula o posterior a la data de creacio");
                 }
                 dataLimit = value;
             }
         }
+
+        public bool validaDataLimit(DateTime? value)
+        {
+            return !(value != null && value < dataCreacio);
+        }
+
         public String DataLimitFormatada
         {
             get
@@ -144,13 +174,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value == null)
+                if (!validaPropietari(value))
                 {
                     throw new Exception("L'usuari que ha creat la tasca es obligatori");
                 }
                 propietari = value;
             }
         }
+
+        public static bool validaPropietari(Usuari value)
+        {
+            return value != null;
+        }
+
         public String NomPropietari
         {
             get
@@ -185,6 +221,10 @@ namespace ModelGestioProjectes
             get
             {
                 return estat;
+            }
+            set
+            {
+                estat = value;
             }
         }
         public String EstatFormatat

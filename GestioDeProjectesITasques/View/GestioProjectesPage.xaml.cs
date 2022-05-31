@@ -27,7 +27,7 @@ namespace GestioDeProjectesITasques.View
     public sealed partial class GestioProjectesPage : Page
     {
         ComponentDB componentDB = new ComponentDB();
-        Estat estat = Estat.VIEW;
+        EnumEstats estat = EnumEstats.VIEW;
 
         public GestioProjectesPage()
         {
@@ -37,14 +37,14 @@ namespace GestioDeProjectesITasques.View
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
-            canviEstat(Estat.VIEW);
+            canviEstat(EnumEstats.VIEW);
         }
 
-        private void canviEstat (Estat estatNou)
+        private void canviEstat (EnumEstats estatNou)
         {
             estat = estatNou;
 
-            if (estat == Estat.VIEW)
+            if (estat == EnumEstats.VIEW)
             {
                 if (dgrProjectes.SelectedItem == null)
                 {
@@ -144,7 +144,7 @@ namespace GestioDeProjectesITasques.View
                 dgrUsuaris.ItemsSource = componentDB.GetLlistaUsuarisAssignatsAmbRol(proj.Id);
                 dgrTasques.ItemsSource = componentDB.GetLlistaTasques(proj.Id);
                 dgrEntrades.ItemsSource = null;
-                canviEstat(Estat.VIEW);
+                canviEstat(EnumEstats.VIEW);
             }
         }
 
@@ -154,7 +154,7 @@ namespace GestioDeProjectesITasques.View
             {
                 dgrTasques.SelectedIndex = -1;
                 dgrEntrades.ItemsSource = null;
-                canviEstat(Estat.VIEW);
+                canviEstat(EnumEstats.VIEW);
             }
             
         }
@@ -166,7 +166,7 @@ namespace GestioDeProjectesITasques.View
                 dgrUsuaris.SelectedIndex = -1;
                 Tasca tasc = (Tasca)dgrTasques.SelectedItem;
                 dgrEntrades.ItemsSource = componentDB.GetLlistaEntrades(tasc.Id);
-                canviEstat(Estat.VIEW);
+                canviEstat(EnumEstats.VIEW);
             }
         }
 
@@ -174,7 +174,7 @@ namespace GestioDeProjectesITasques.View
         {
             if (dgrEntrades.SelectedItem != null)
             {
-                canviEstat(Estat.VIEW);
+                canviEstat(EnumEstats.VIEW);
             }
         }
 
@@ -183,11 +183,11 @@ namespace GestioDeProjectesITasques.View
             ContentDialog cpt = new ContentDialogProjecte
             {
                 ElProjecte = null,
-                ElEstat = Estat.ALTA_PROJECTE
+                ElEstat = EnumEstats.ALTA_PROJECTE
             };
             ContentDialogResult result = await cpt.ShowAsync();
             dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
-            canviEstat(Estat.VIEW);
+            canviEstat(EnumEstats.VIEW);
         }
 
         private void btnEsborrarProjecte_Click(object sender, RoutedEventArgs e)
@@ -195,7 +195,7 @@ namespace GestioDeProjectesITasques.View
             Projecte proj = (Projecte)dgrProjectes.SelectedItem;
             componentDB.deleteProjecte(proj.Id);
             dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
-            canviEstat(Estat.VIEW);
+            canviEstat(EnumEstats.VIEW);
         }
 
         private async void btnEditarProjecte_Click(object sender, RoutedEventArgs e)
@@ -203,11 +203,11 @@ namespace GestioDeProjectesITasques.View
             ContentDialog cpt = new ContentDialogProjecte
             {
                 ElProjecte = (Projecte)dgrProjectes.SelectedItem,
-                ElEstat = Estat.MODIFICACIO_PROJECTE
+                ElEstat = EnumEstats.MODIFICACIO_PROJECTE
             };
             ContentDialogResult result = await cpt.ShowAsync();
             dgrProjectes.ItemsSource = componentDB.GetLlistaProjectes();
-            canviEstat(Estat.VIEW);
+            canviEstat(EnumEstats.VIEW);
 
         }
 
@@ -216,11 +216,11 @@ namespace GestioDeProjectesITasques.View
             ContentDialog cpu = new ContentDialogUsuari
             {
                 IdProjecte = ((Projecte)dgrProjectes.SelectedItem).Id,
-                ElEstat = Estat.MODIFICACIO_PROJECTE
+                ElEstat = EnumEstats.MODIFICACIO_PROJECTE
             };
             ContentDialogResult result = await cpu.ShowAsync();
             dgrUsuaris.ItemsSource = componentDB.GetLlistaUsuarisAssignatsAmbRol(((Projecte)dgrProjectes.SelectedItem).Id);
-            canviEstat(Estat.VIEW);
+            canviEstat(EnumEstats.VIEW);
         }
 
         private void btnDesassignarUsuari_Click(object sender, RoutedEventArgs e)
@@ -229,39 +229,47 @@ namespace GestioDeProjectesITasques.View
             Usuari usu = ((ProjecteUsuariRol)dgrUsuaris.SelectedItem).Usuari;
             componentDB.desassignarUsuari(proj.Id, usu.Id);
             dgrUsuaris.ItemsSource = componentDB.GetLlistaUsuarisAssignatsAmbRol(((Projecte)dgrProjectes.SelectedItem).Id);
-            canviEstat(Estat.VIEW);
+            canviEstat(EnumEstats.VIEW);
         }
 
         private async void btnNovaTasca_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog cpt = new ContentDialogTasca
             {
+                IdProjecte = ((Projecte)dgrProjectes.SelectedItem).Id,
                 LaTasca = null,
-                ElEstat = Estat.ALTA_TASCA
+                ElEstat = EnumEstats.ALTA_TASCA
             };
             ContentDialogResult result = await cpt.ShowAsync();
             dgrTasques.ItemsSource = componentDB.GetLlistaTasques(((Projecte)dgrProjectes.SelectedItem).Id);
-            canviEstat(Estat.VIEW);
+            dgrEntrades.ItemsSource = null;
+            canviEstat(EnumEstats.VIEW);
         }
 
-        private void btnEsborrarTasca_Click(object sender, RoutedEventArgs e)
+        private async void btnEsborrarTasca_Click(object sender, RoutedEventArgs e)
         {
-            Tasca tasc = (Tasca)dgrTasques.SelectedItem;
-            componentDB.deleteTasca(tasc.Id);
+            ContentDialog cpte = new ContentDialogTascaEsborrar
+            {
+                IdTasca = ((Tasca)dgrTasques.SelectedItem).Id
+            };
+            ContentDialogResult result = await cpte.ShowAsync();
             dgrTasques.ItemsSource = componentDB.GetLlistaTasques(((Projecte)dgrProjectes.SelectedItem).Id);
-            canviEstat(Estat.VIEW);
+            dgrEntrades.ItemsSource = null;
+            canviEstat(EnumEstats.VIEW);
         }
 
         private async void btnEditarTasca_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog cpt = new ContentDialogTasca
             {
+                IdProjecte = ((Projecte)dgrProjectes.SelectedItem).Id,
                 LaTasca = (Tasca)dgrTasques.SelectedItem,
-                ElEstat = Estat.MODIFICACIO_TASCA
+                ElEstat = EnumEstats.MODIFICACIO_TASCA
             };
             ContentDialogResult result = await cpt.ShowAsync();
             dgrTasques.ItemsSource = componentDB.GetLlistaTasques(((Projecte)dgrProjectes.SelectedItem).Id);
-            canviEstat(Estat.VIEW);
+            dgrEntrades.ItemsSource = null;
+            canviEstat(EnumEstats.VIEW);
         }
 
         private void btnNovaEntrada_Click(object sender, RoutedEventArgs e)

@@ -119,12 +119,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Estat.cs" />
+    <Compile Include="Model\EnumEstats.cs" />
     <Compile Include="View\ContentDialogProjecte.xaml.cs">
       <DependentUpon>ContentDialogProjecte.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ContentDialogTasca.xaml.cs">
       <DependentUpon>ContentDialogTasca.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContentDialogTascaEsborrar.xaml.cs">
+      <DependentUpon>ContentDialogTascaEsborrar.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ContentDialogUsuari.xaml.cs">
       <DependentUpon>ContentDialogUsuari.xaml</DependentUpon>
@@ -178,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ContentDialogTasca.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContentDialogTascaEsborrar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

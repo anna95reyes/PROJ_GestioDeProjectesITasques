@@ -33,7 +33,7 @@
         <TextBox x:Name="txtNom" Grid.Row="1" Grid.Column="1" Margin="5" TextChanged="txtNom_TextChanged"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Descripcio:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
         <TextBox x:Name="txtDescripcio" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="5"
-                 MinHeight="150" MinWidth="250" TextChanged="txtDescripcio_TextChanged"/>
+                 MinHeight="60" MinWidth="250" TextChanged="txtDescripcio_TextChanged"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Data limit:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
         <CalendarDatePicker x:Name="cdpDataLimit" Grid.Row="3" Grid.Column="1" Margin="5" DateChanged="cdpDataLimit_DateChanged"/>
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Propietari:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5 20 5 5"/>

@@ -40,8 +40,8 @@ namespace GestioDeProjectesITasques.View
             set { elProjecte = value; }
         }
 
-        private Estat estat;
-        public Estat ElEstat
+        private EnumEstats estat;
+        public EnumEstats ElEstat
         {
             get { return estat; }
             set { estat = value; }
@@ -54,11 +54,11 @@ namespace GestioDeProjectesITasques.View
             btnCancelar.IsEnabled = true;
             btnGuardar.IsEnabled = false;
 
-            if (elProjecte == null && estat == Estat.ALTA_PROJECTE)
+            if (elProjecte == null && estat == EnumEstats.ALTA_PROJECTE)
             {
                 netejarFormulari();
             } 
-            else if (elProjecte != null && estat == Estat.MODIFICACIO_PROJECTE)
+            else if (elProjecte != null && estat == EnumEstats.MODIFICACIO_PROJECTE)
             {
                 mostrarFormulari();
             }
@@ -85,12 +85,12 @@ namespace GestioDeProjectesITasques.View
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            if (estat == Estat.ALTA_PROJECTE)
+            if (estat == EnumEstats.ALTA_PROJECTE)
             {
                 Projecte proj = new Projecte(1, txtNom.Text, txtDescripcio.Text, (Usuari)cbxCapProjecte.SelectedItem);
                 componentDB.addProjecte(proj);
             }
-            else if (estat == Estat.MODIFICACIO_PROJECTE)
+            else if (estat == EnumEstats.MODIFICACIO_PROJECTE)
             {
                 Projecte proj = new Projecte(elProjecte.Id, txtNom.Text, txtDescripcio.Text, (Usuari)cbxCapProjecte.SelectedItem);
                 componentDB.updateProjecte(proj);
