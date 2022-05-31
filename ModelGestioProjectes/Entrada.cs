@@ -37,13 +37,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value <= 0)
+                if (!validaNumero(value))
                 {
                     throw new Exception("El numero es positiu");
                 }
                 numero = value;
             }
         }
+
+        public static bool validaNumero(int value)
+        {
+            return !(value <= 0);
+        }
+
         public DateTime Data {
             get
             {
@@ -51,12 +57,17 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value > DateTime.Now)
+                if (!validaData(value))
                 {
                     throw new Exception("La data ha de ser anterior a la data actual");
                 }
                 data = value;
             }
+        }
+
+        private static bool validaData(DateTime value)
+        {
+            return !(value > DateTime.Now);
         }
 
         public String DataFormatada
@@ -74,13 +85,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value == null || value.Length <= 0)
+                if (!validaEntrada(value))
                 {
                     throw new Exception("La entrada es obligatoria i no nula");
                 }
                 entrada = value;
             }
         }
+
+        public static bool validaEntrada(string value)
+        {
+            return !(value == null || value.Length <= 0);
+        }
+
         public Usuari Escriptor {
             get
             {
@@ -88,13 +105,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value == null)
+                if (!validaEscriptor(value))
                 {
                     throw new Exception("L'escriptor es obligatori");
                 }
                 escriptor = value;
-            } 
+            }
         }
+
+        public static bool validaEscriptor(Usuari value)
+        {
+            return value != null;
+        }
+
         public String NomEscriptor
         {
             get
@@ -109,13 +132,19 @@ namespace ModelGestioProjectes
             }
             set
             {
-                if (value != null && value.Equals(escriptor))
+                if (!validaNovaAssignacio(value))
                 {
                     throw new Exception("No es pot tornar a assignar al mateix usuari");
                 }
                 novaAssignacio = value;
             }
         }
+
+        public bool validaNovaAssignacio(Usuari value)
+        {
+            return !(value != null && value.Equals(escriptor));
+        }
+
         public String NomNovaAssignacio
         {
             get

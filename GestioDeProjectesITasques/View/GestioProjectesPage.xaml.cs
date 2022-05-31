@@ -272,19 +272,37 @@ namespace GestioDeProjectesITasques.View
             canviEstat(EnumEstats.VIEW);
         }
 
-        private void btnNovaEntrada_Click(object sender, RoutedEventArgs e)
+        private async void btnNovaEntrada_Click(object sender, RoutedEventArgs e)
         {
-
+            ContentDialog cpe = new ContentDialogEntrada
+            {
+                IdTasca = ((Tasca)dgrTasques.SelectedItem).Id,
+                LaEntrada = null,
+                ElEstat = EnumEstats.ALTA_ENTRADA
+            };
+            ContentDialogResult result = await cpe.ShowAsync();
+            dgrEntrades.ItemsSource = componentDB.GetLlistaEntrades(((Tasca)dgrTasques.SelectedItem).Id);
+            canviEstat(EnumEstats.VIEW);
         }
 
         private void btnEsborrarEntrada_Click(object sender, RoutedEventArgs e)
         {
-
+            componentDB.deleteEntrada(((Tasca)dgrTasques.SelectedItem).Id, ((Entrada)dgrEntrades.SelectedItem).Numero);
+            dgrEntrades.ItemsSource = componentDB.GetLlistaEntrades(((Tasca)dgrTasques.SelectedItem).Id);
+            canviEstat(EnumEstats.VIEW);
         }
 
-        private void btnEditarEntrada_Click(object sender, RoutedEventArgs e)
+        private async void btnEditarEntrada_Click(object sender, RoutedEventArgs e)
         {
-
+            ContentDialog cpe = new ContentDialogEntrada
+            {
+                IdTasca = ((Tasca)dgrTasques.SelectedItem).Id,
+                LaEntrada = (Entrada)dgrEntrades.SelectedItem,
+                ElEstat = EnumEstats.MODIFICACIO_ENTRADA
+            };
+            ContentDialogResult result = await cpe.ShowAsync();
+            dgrEntrades.ItemsSource = componentDB.GetLlistaEntrades(((Tasca)dgrTasques.SelectedItem).Id);
+            canviEstat(EnumEstats.VIEW);
         }
 
         

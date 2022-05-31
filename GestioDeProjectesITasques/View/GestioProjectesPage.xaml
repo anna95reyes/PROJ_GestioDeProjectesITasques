@@ -321,7 +321,7 @@
                     </controls:DataGridTextColumn>
 
                     <controls:DataGridTextColumn Header="Responsable" Binding="{Binding NomResponsable}" 
-                                                     Width="SizeToCells" MinWidth="100" FontSize="12">
+                                                     Width="SizeToCells" MinWidth="120" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">
                                 <Setter Property="FontWeight" Value="Bold" />

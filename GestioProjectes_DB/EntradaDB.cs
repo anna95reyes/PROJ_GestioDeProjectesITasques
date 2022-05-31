@@ -129,7 +129,7 @@ namespace DB_MySQL
 
                         DBUtil.crearParametre(consulta, "@tasc_id", idTasca, DbType.Int32);
 
-                        consulta.CommandText = "select max(entr_numeracio)+1 from entrada where tasc_id = @idTasca";
+                        consulta.CommandText = "select max(entr_numeracio)+1 from entrada where tasc_id = @tasc_id";
                         int nextNumeracioId = (int)(Int64)consulta.ExecuteScalar();
 
                         
@@ -137,13 +137,28 @@ namespace DB_MySQL
                         DBUtil.crearParametre(consulta, "@entr_data", entrada.Data, DbType.DateTime);
                         DBUtil.crearParametre(consulta, "@entr_entrada", entrada._Entrada, DbType.String);
                         DBUtil.crearParametre(consulta, "@usu_escrita_per", entrada.Escriptor.Id, DbType.Int32);
-                        DBUtil.crearParametre(consulta, "@usu_nova_assignacio", entrada.NovaAssignacio.Id, DbType.Int32);
+                        
                         DBUtil.crearParametre(consulta, "@stat_id", entrada.NouEstat.Id, DbType.Int32);
 
-                        consulta.CommandText = $@"insert into entrada (tasc_id, entr_numeracio, entr_data, entr_entrada, 
+                        if (entrada.NovaAssignacio != null)
+                        {
+                            DBUtil.crearParametre(consulta, "@usu_nova_assignacio", entrada.NovaAssignacio.Id, DbType.Int32);
+
+                            consulta.CommandText = $@"insert into entrada (tasc_id, entr_numeracio, entr_data, entr_entrada, 
                                                                        usu_escrita_per, usu_nova_assignacio, stat_id)
                                                   values (@tasc_id, @entr_numeracio, @entr_data, @entr_entrada, @usu_escrita_per, 
                                                           @usu_nova_assignacio, @stat_id)";
+                        }
+                        else
+                        {
+                            
+                            consulta.CommandText = $@"insert into entrada (tasc_id, entr_numeracio, entr_data, entr_entrada, 
+                                                                       usu_escrita_per, usu_nova_assignacio, stat_id)
+                                                  values (@tasc_id, @entr_numeracio, @entr_data, @entr_entrada, @usu_escrita_per, 
+                                                          null, @stat_id)";
+                        }
+
+                        
 
                         int numeroDeFiles = consulta.ExecuteNonQuery(); //per fer un update o un delete
                         if (numeroDeFiles != 1)
@@ -225,12 +240,12 @@ namespace DB_MySQL
 
                         DBUtil.crearParametre(consulta, "@tasc_id", idTasca, DbType.Int32);
                         DBUtil.crearParametre(consulta, "@entr_numeracio", numeroEntrada, DbType.Int32);
-                        consulta.CommandText = "select count(1) from entrada where tasc_id = @tasc_id and entr_numeracio = @entrada_numeracio";
+                        consulta.CommandText = "select count(1) from entrada where tasc_id = @tasc_id and entr_numeracio = @entr_numeracio";
                         long numProjectes = (long)consulta.ExecuteScalar();
 
                         if (numProjectes != 1) return false;
 
-                        consulta.CommandText = "delete from entrada where tasc_id = @tasc_id and entr_numeracio = @entrada_numeracio";
+                        consulta.CommandText = "delete from entrada where tasc_id = @tasc_id and entr_numeracio = @entr_numeracio";
 
                         int numDeleted = consulta.ExecuteNonQuery();
 

@@ -88,7 +88,7 @@ namespace GestioDeProjectesITasques.View
             cdpDataCreacio.Date = DateTime.Now;
             txtNom.Text = "";
             txtDescripcio.Text = "";
-            cdpDataLimit.Date = DateTime.Now;
+            cdpDataLimit.Date = DateTime.Now.AddDays(1);
             cbxPropietari.SelectedItem = null;
             cbxResponsable.SelectedItem = null;
             cbxEstat.SelectedItem = null;

@@ -1,0 +1,60 @@
+﻿<ContentDialog
+    x:Class="GestioDeProjectesITasques.View.ContentDialogEntrada"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GestioDeProjectesITasques.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Edició entrada"
+    CornerRadius="10"
+    Loaded="dialogEntrada_Loaded"
+    x:Name="dialogEntrada">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Data:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+        <CalendarDatePicker x:Name="cdpData" Grid.Row="0" Grid.Column="1" Margin="5" DateChanged="cdpData_DateChanged"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Entrada:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox x:Name="txtEntrada" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="5"
+                 MinHeight="60" MinWidth="250" TextChanged="txtEntrada_TextChanged"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Escriptor:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5 20 5 5"/>
+        <ComboBox x:Name="cbxEscriptor" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 20 5 5" MinWidth="150" SelectionChanged="cbxEscriptor_SelectionChanged"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Nova assignació:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5 20 5 5"/>
+        <ComboBox x:Name="cbxNovaAssignacio" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 20 5 5" MinWidth="150" SelectionChanged="cbxNovaAssignacio_SelectionChanged"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Nou estat:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5 20 5 5"/>
+        <ComboBox x:Name="cbxNouEstat" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 20 5 5" MinWidth="150" SelectionChanged="cbxNouEstat_SelectionChanged"/>
+        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 30 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnGuardar" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnGuardar_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-save-50.png" Height="30"/>
+                    <TextBlock Text="Guardar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnCancelar" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnCancelar_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/icons/icons8-cancel-50.png" Height="30" />
+                    <TextBlock Text="Cancelar" VerticalAlignment="Center"  Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+
+    </Grid>
+</ContentDialog>
