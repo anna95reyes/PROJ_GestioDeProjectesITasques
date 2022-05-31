@@ -170,7 +170,6 @@ namespace DB_MySQL
 
         public static void updateTasca(Tasca tasca)
         {
-            //TODO: fer l'update
             using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
             {
                 using (DbConnection connection = context.Database.GetDbConnection()) //pren la conexxio de la BD
