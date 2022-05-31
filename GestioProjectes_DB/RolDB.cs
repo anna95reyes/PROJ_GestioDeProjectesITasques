@@ -10,11 +10,11 @@ using System.Text;
 
 namespace DB_MySQL
 {
-    public class EstatDB
+    public class RolDB
     {
-        public static ObservableCollection<Estat> GetLlistaEstats()
+        public static ObservableCollection<Rol> GetLlistaRols()
         {
-            ObservableCollection<Estat> estats = new ObservableCollection<Estat>();
+            ObservableCollection<Rol> rols = new ObservableCollection<Rol>();
 
             using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
             {
@@ -24,11 +24,11 @@ namespace DB_MySQL
                     using (DbCommand consulta = connection.CreateCommand())
                     {
 
-                        consulta.CommandText = $@"select stat_id, stat_nom from estat";
+                        consulta.CommandText = $@"select rol_id, rol_nom from rol";
                         DbDataReader reader = consulta.ExecuteReader(); //per cuan pot retorna mes d'una fila
 
                         Dictionary<string, int> ordinals = new Dictionary<string, int>();
-                        string[] cols = { "stat_id", "stat_nom" };
+                        string[] cols = { "rol_id", "rol_nom"};
                         foreach (string c in cols)
                         {
                             ordinals[c] = reader.GetOrdinal(c);
@@ -36,21 +36,22 @@ namespace DB_MySQL
 
                         while (reader.Read()) //llegeix la fila seguent, retorna true si ha pogut llegir la fila, retorna false si no hi ha mes dades per lleguir
                         {
-                            int stat_id = reader.GetInt32(ordinals["stat_id"]);
-                            string stat_nom = reader.GetString(ordinals["stat_nom"]);
+                            int rol_id = reader.GetInt32(ordinals["rol_id"]);
+                            string rol_nom = reader.GetString(ordinals["rol_nom"]);
 
-                            Estat estat = new Estat(stat_id, stat_nom);
-                            estats.Add(estat);
+                            Rol rol = new Rol(rol_id, rol_nom);
+                            rols.Add(rol);
                         }
 
                     }
                 }
             }
-            return estats;
+            return rols;
         }
-        public static Estat GetEstat(int idEstat)
+
+        public static Rol GetRol(int idRol)
         {
-            Estat estat = null;
+            Rol rol = null;
 
             using (MySqlDBContext context = new MySqlDBContext()) //crea el contexte de la base de dades
             {
@@ -60,14 +61,14 @@ namespace DB_MySQL
                     connection.Open();
                     using (DbCommand consulta = connection.CreateCommand())
                     {
-                        DBUtil.crearParametre(consulta, "@stat_id", idEstat, DbType.Int32);
+                        DBUtil.crearParametre(consulta, "@rol_id", idRol, DbType.Int32);
 
-                        consulta.CommandText = $@"select stat_id, stat_nom from estat where stat_id = @stat_id";
+                        consulta.CommandText = $@"select rol_id, rol_nom from rol where rol_id = @rol_id";
 
                         DbDataReader reader = consulta.ExecuteReader(); //per cuan pot retorna mes d'una fila
 
                         Dictionary<string, int> ordinals = new Dictionary<string, int>();
-                        string[] cols = { "stat_id", "stat_nom" };
+                        string[] cols = { "rol_id", "rol_nom" };
                         foreach (string c in cols)
                         {
                             ordinals[c] = reader.GetOrdinal(c);
@@ -75,10 +76,10 @@ namespace DB_MySQL
 
                         while (reader.Read()) //llegeix la fila seguent, retorna true si ha pogut llegir la fila, retorna false si no hi ha mes dades per lleguir
                         {
-                            int stat_id = reader.GetInt32(ordinals["stat_id"]);
-                            string stat_nom = reader.GetString(ordinals["stat_nom"]);
+                            int rol_id = reader.GetInt32(ordinals["rol_id"]);
+                            string rol_nom = reader.GetString(ordinals["rol_nom"]);
 
-                            estat = new Estat(stat_id, stat_nom);
+                            rol = new Rol(rol_id, rol_nom);
                         }
 
 
@@ -86,8 +87,7 @@ namespace DB_MySQL
                 }
             }
 
-            return estat;
+            return rol;
         }
-
     }
 }

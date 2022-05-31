@@ -57,7 +57,7 @@ namespace ModelGestioProjectes
 
         public override string ToString()
         {
-            return "Estat{" + "id=" + id + ", nom=" + nom + '}';
+            return Nom;
         }
     }
 }

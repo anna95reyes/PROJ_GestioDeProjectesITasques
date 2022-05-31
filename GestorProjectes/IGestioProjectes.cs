@@ -11,6 +11,7 @@ namespace GestorProjectes
         ObservableCollection<Projecte> GetLlistaProjectes();
         Projecte GetProjecte(int idProjecte);
         ObservableCollection<Usuari> GetLlistaUsuaris();
+        ObservableCollection<ProjecteUsuariRol> GetLlistaUsuarisAssignatsAmbRol(int idProjecte);
         ObservableCollection<Usuari> GetLlistaUsuarisAssignats(int idProjecte);
         ObservableCollection<Usuari> GetLlistaUsuarisNoAssignats(int idProjecte);
         Usuari GetUsuari(int idUsuari);
@@ -18,7 +19,10 @@ namespace GestorProjectes
         Tasca GetTasca(int idTasca);
         ObservableCollection<Entrada> GetLlistaEntrades(int idTasca);
         Entrada GetEntrada(int idTasca, int idNumeracio);
+        ObservableCollection<Estat> GetLlistaEstats();
         Estat GetEstat(int idEstat);
+        ObservableCollection<Rol> GetLlistaRols();
+        Rol GetRol(int idRol);
         void addProjecte(Projecte projecte);
         void updateProjecte(Projecte projecte);
         void deleteProjecte(int idProjecte);

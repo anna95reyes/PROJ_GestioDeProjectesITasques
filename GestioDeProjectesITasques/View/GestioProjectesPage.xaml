@@ -134,7 +134,7 @@
                          GridLinesVisibility="None" AlternatingRowBackground="#FFF9F9F9" Background="White"
                          SelectionChanged="dgrUsuaris_SelectionChanged" BorderBrush="LightGray" BorderThickness="2">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="Id" Binding="{Binding Id}" 
+                    <controls:DataGridTextColumn Header="Id" Binding="{Binding Usuari.Id}" 
                                                      Width="SizeToHeader" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">
@@ -145,7 +145,7 @@
                         </controls:DataGridTextColumn.HeaderStyle>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Header="Nom" Binding="{Binding Nom}" 
+                    <controls:DataGridTextColumn Header="Nom" Binding="{Binding Usuari.Nom}" 
                                                      Width="SizeToCells" MinWidth="100" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">
@@ -156,7 +156,7 @@
                         </controls:DataGridTextColumn.HeaderStyle>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Header="1r Cognom" Binding="{Binding Cognom1}" 
+                    <controls:DataGridTextColumn Header="1r Cognom" Binding="{Binding Usuari.Cognom1}" 
                                                      Width="SizeToCells" MinWidth="120" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">
@@ -167,7 +167,7 @@
                         </controls:DataGridTextColumn.HeaderStyle>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Header="2n Cognom" Binding="{Binding Cognom2}" 
+                    <controls:DataGridTextColumn Header="2n Cognom" Binding="{Binding Usuari.Cognom2}" 
                                                      Width="SizeToCells" MinWidth="120" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">
@@ -178,7 +178,7 @@
                         </controls:DataGridTextColumn.HeaderStyle>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Header="Data de naixement" Binding="{Binding DataNaixementFormatada}" 
+                    <controls:DataGridTextColumn Header="Data de naixement" Binding="{Binding Usuari.DataNaixementFormatada}" 
                                                      Width="SizeToCells" MinWidth="150" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">
@@ -189,7 +189,18 @@
                         </controls:DataGridTextColumn.HeaderStyle>
                     </controls:DataGridTextColumn>
 
-                    <controls:DataGridTextColumn Header="Login" Binding="{Binding Login}" 
+                    <controls:DataGridTextColumn Header="Login" Binding="{Binding Usuari.Login}" 
+                                                     Width="SizeToCells" MinWidth="100" FontSize="12">
+                        <controls:DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="wctprimitives:DataGridColumnHeader">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="12" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </controls:DataGridTextColumn.HeaderStyle>
+                    </controls:DataGridTextColumn>
+
+                    <controls:DataGridTextColumn Header="Rol" Binding="{Binding Rol.Nom}" 
                                                      Width="SizeToCells" MinWidth="100" FontSize="12">
                         <controls:DataGridTextColumn.HeaderStyle>
                             <Style TargetType="wctprimitives:DataGridColumnHeader">

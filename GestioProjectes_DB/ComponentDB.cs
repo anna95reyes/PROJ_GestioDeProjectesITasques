@@ -24,7 +24,10 @@ namespace DB_MySQL
         {
             return UsuariDB.GetLlistaUsuaris();
         }
-
+        public ObservableCollection<ProjecteUsuariRol> GetLlistaUsuarisAssignatsAmbRol(int idProjecte)
+        {
+            return ProjecteUsuariRolDB.GetLlistaUsuarisAssignatsAmbRol(idProjecte);
+        }
         public ObservableCollection<Usuari> GetLlistaUsuarisAssignats(int idProjecte)
         {
             return UsuariDB.GetLlistaUsuarisAssignats(idProjecte);
@@ -60,9 +63,24 @@ namespace DB_MySQL
             return EntradaDB.GetEntrada(idTasca, idNumeracio);
         }
 
+        public ObservableCollection<Estat> GetLlistaEstats()
+        {
+            return EstatDB.GetLlistaEstats();
+        }
+
         public Estat GetEstat(int idEstat)
         {
             return EstatDB.GetEstat(idEstat);
+        }
+
+        public ObservableCollection<Rol> GetLlistaRols()
+        {
+            return RolDB.GetLlistaRols();
+        }
+
+        public Rol GetRol(int idRol)
+        {
+            return RolDB.GetRol(idRol);
         }
 
         public void addProjecte(Projecte projecte)

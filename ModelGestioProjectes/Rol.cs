@@ -89,7 +89,7 @@ namespace ModelGestioProjectes
 
         public override string ToString()
         {
-            return "Rol{" + "id=" + id + ", nom=" + nom + ", usuarisProjectes=" + usuarisProjectes + '}';
+            return Nom;
         }
     }
 }

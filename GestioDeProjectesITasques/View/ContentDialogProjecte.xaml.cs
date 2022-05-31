@@ -24,12 +24,13 @@ namespace GestioDeProjectesITasques.View
 {
     public sealed partial class ContentDialogProjecte : ContentDialog
     {
-        ComponentDB componentDB = new ComponentDB();
 
         public ContentDialogProjecte()
         {
             this.InitializeComponent();
         }
+
+        ComponentDB componentDB = new ComponentDB();
 
         private Projecte elProjecte;
 
@@ -45,15 +46,6 @@ namespace GestioDeProjectesITasques.View
             get { return estat; }
             set { estat = value; }
         }
-
-        private Boolean actualitzarTaula;
-
-        public Boolean ActualitzarTaula
-        {
-            get { return actualitzarTaula; }
-            set { actualitzarTaula = value; }
-        }
-
 
         private void ContentDialog_Loaded(object sender, RoutedEventArgs e)
         {

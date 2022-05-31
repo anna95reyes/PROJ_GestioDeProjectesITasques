@@ -192,7 +192,7 @@ namespace ModelGestioProjectes
             }
             
         }
-
+    
         public override string ToString()
         {
             return NomComplet;
