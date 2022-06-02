@@ -24,7 +24,7 @@ namespace NBA_BD.db
         {
             //optionBuilder.UseMySQL("Server=" + server + ";Database=" + dataBase + ";UID=" + user + ";Password=" + password);
 
-            optionBuilder.UseMySQL("Server=localhost;Database=projecte;UID=root;Password=");
+            optionBuilder.UseMySQL("Server=51.68.224.27;Database=dam2_areyes;UID=dam2-areyes;Password=2681X");
         }
     }
 }

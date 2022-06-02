@@ -283,7 +283,7 @@
                     </controls:DataGridTextColumn>
 
                     <controls:DataGridTextColumn Header="Descripcio" Binding="{Binding Descripcio}" 
-                                                     Width="SizeToCells" MinWidth="150" FontSize="12">
+                                                     Width="150" FontSize="12">
                         <controls:DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextWrapping" Value="Wrap"/>

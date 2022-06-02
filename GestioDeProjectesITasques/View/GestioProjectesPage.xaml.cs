@@ -248,11 +248,19 @@ namespace GestioDeProjectesITasques.View
 
         private async void btnEsborrarTasca_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog cpte = new ContentDialogTascaEsborrar
+            if (componentDB.GetLlistaEntrades(((Projecte)dgrProjectes.SelectedItem).Id).Count > 0)
             {
-                IdTasca = ((Tasca)dgrTasques.SelectedItem).Id
-            };
-            ContentDialogResult result = await cpte.ShowAsync();
+                ContentDialog cpte = new ContentDialogTascaEsborrar
+                {
+                    IdTasca = ((Tasca)dgrTasques.SelectedItem).Id
+                };
+                ContentDialogResult result = await cpte.ShowAsync();
+            } 
+            else
+            {
+                componentDB.deleteTasca(((Projecte)dgrProjectes.SelectedItem).Id);
+            }
+
             dgrTasques.ItemsSource = componentDB.GetLlistaTasques(((Projecte)dgrProjectes.SelectedItem).Id);
             dgrEntrades.ItemsSource = null;
             canviEstat(EnumEstats.VIEW);

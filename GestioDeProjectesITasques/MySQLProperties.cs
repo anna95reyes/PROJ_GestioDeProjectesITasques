@@ -23,10 +23,10 @@ namespace DB_MySQL.db
             // Save a setting locally on the device
             if (localSettings != null)
             {
-                localSettings.Values["server"] = "localhost";
-                localSettings.Values["dataBase"] = "projecte";
-                localSettings.Values["user"] = "root";
-                localSettings.Values["password"] = "";
+                localSettings.Values["server"] = "51.68.224.27";
+                localSettings.Values["dataBase"] = "dam2_areyes";
+                localSettings.Values["user"] = "dam2-areyes";
+                localSettings.Values["password"] = "2681X";
             }
             
             if (localSettings != null)
